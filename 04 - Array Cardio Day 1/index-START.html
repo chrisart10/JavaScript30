@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>Array Cardio 💪</title>
 </head>
+
 <body>
   <p><em>Psst: have a look at the JavaScript Console</em> 💁</p>
   <script>
@@ -34,32 +36,68 @@
       'Berne, Eric', 'Berra, Yogi', 'Berry, Wendell', 'Bevan, Aneurin', 'Ben-Gurion, David', 'Bevel, Ken', 'Biden, Joseph', 'Bennington, Chester', 'Bierce, Ambrose',
       'Billings, Josh', 'Birrell, Augustine', 'Blair, Tony', 'Beecher, Henry', 'Biondo, Frank'
     ];
-    
+
     // Array.prototype.filter()
     // 1. Filter the list of inventors for those who were born in the 1500's
-
+    const inventors1500 = inventors.filter(function (inventor) {
+      if (inventor.year >= 1500 && inventor.year <= 1599) return true;
+    })
+    console.table(inventors1500);
     // Array.prototype.map()
     // 2. Give us an array of the inventors first and last names
+    const firstAndLastNames = inventors.map(inventor => `${inventor.first} ${inventor.last}`);
+    console.log(firstAndLastNames);
 
     // Array.prototype.sort()
     // 3. Sort the inventors by birthdate, oldest to youngest
 
+    const inventorByBirthdate = inventors.sort((after, before) => after.year - before.year);
+    // const inventorByBirthdate = inventors.sort((after,before)=> after.year > before.year ? 1 : -1); // Another solution
+    console.table(inventorByBirthdate);
+
     // Array.prototype.reduce()
     // 4. How many years did all the inventors live all together?
-
+    // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/reduce
+    const sumOfAllinventorsLiveAllTogether = inventors.reduce((total, inventor) => total + (inventor.passed - inventor.year), 0);
+    console.log(sumOfAllinventorsLiveAllTogether);
     // 5. Sort the inventors by years lived
-
+    const oldest = inventors.sort((after, before) => (after.passed - after.year > before.passed - before.year) ? -1 : 1);
+    // const oldest = inventors.sort((after, before) =>{ // more verbose
+    //   const lastGuy = after.passed - after.year;
+    //   const nextGuy = before.passed - before.year;
+    //    return (lastGuy > nextGuy ) ? -1 : 1;
+    //   });
+    console.table(oldest);
     // 6. create a list of Boulevards in Paris that contain 'de' anywhere in the name
     // https://en.wikipedia.org/wiki/Category:Boulevards_in_Paris
 
+    // const category = document.querySelector('.mw-category');
+    // const links = Array.from(category.querySelectorAll('a'));
+    // const de = links.map(link=> link.textContent)
+    //                 .filter(streetName => streetName.includes('de'));
 
     // 7. sort Exercise
     // Sort the people alphabetically by last name
-
+    const alphaPeople = people.sort((previus, current) => {
+      const [previusLastName, previusFirstName] = previus.split(',');
+      const [currentLastName, currentFirstName] = current.split(',');
+      return previusLastName > currentLastName ? 1 : -1;
+    });
+    console.table(alphaPeople);
     // 8. Reduce Exercise
     // Sum up the instances of each of these
-    const data = ['car', 'car', 'truck', 'truck', 'bike', 'walk', 'car', 'van', 'bike', 'walk', 'car', 'van', 'car', 'truck' ];
+    const data = ['car', 'car', 'truck', 'truck', 'bike', 'walk', 'car', 'van', 'bike', 'walk', 'car', 'van', 'car', 'truck'];
+    const total = data.reduce((obj, item) => {
+      if (!obj[item]) {
+        obj[item] = 0;
+      }
+      obj[item] += 1;
+      return obj;
+    }, {});
+
+    console.log(total);
 
   </script>
 </body>
+
 </html>
